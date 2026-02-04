@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A11111110000000000000001 /* IceBaitCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000011; };
+		A11111110000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000012; };
+		A11111110000000000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000013; };
+		A11111110000000000000004 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000014; };
+		A11111110000000000000005 /* FishType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000015; };
+		A11111110000000000000006 /* BaitType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000016; };
+		A11111110000000000000007 /* CalculationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000017; };
+		A11111110000000000000008 /* BaitProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000018; };
+		A11111110000000000000009 /* HistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000019; };
+		A1111111000000000000000A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1111111000000000000001A; };
+		A1111111000000000000000B /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1111111000000000000001B; };
+		A1111111000000000000000C /* SelectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1111111000000000000001C; };
+		A1111111000000000000000D /* ResultCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1111111000000000000001D; };
+		A1111111000000000000000E /* IconViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1111111000000000000001E; };
+		A1111111000000000000000F /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1111111000000000000001F; };
+		A11111110000000000000010 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000020; };
+		A11111110000000000000021 /* ProfilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000031; };
+		A11111110000000000000022 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000032; };
+		A11111110000000000000023 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000033; };
+		A11111110000000000000024 /* HistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000034; };
+		A11111110000000000000025 /* KnowledgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000035; };
+		A11111110000000000000026 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000036; };
+		A11111110000000000000027 /* CalculationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000037; };
+		A11111110000000000000028 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000038; };
+		A11111110000000000000029 /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000039; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A11111110000000000000011 /* IceBaitCalcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceBaitCalcApp.swift; sourceTree = "<group>"; };
+		A11111110000000000000012 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A11111110000000000000013 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A11111110000000000000014 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		A11111110000000000000015 /* FishType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishType.swift; sourceTree = "<group>"; };
+		A11111110000000000000016 /* BaitType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaitType.swift; sourceTree = "<group>"; };
+		A11111110000000000000017 /* CalculationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationResult.swift; sourceTree = "<group>"; };
+		A11111110000000000000018 /* BaitProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaitProfile.swift; sourceTree = "<group>"; };
+		A11111110000000000000019 /* HistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEntry.swift; sourceTree = "<group>"; };
+		A1111111000000000000001A /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		A1111111000000000000001B /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
+		A1111111000000000000001C /* SelectionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionPicker.swift; sourceTree = "<group>"; };
+		A1111111000000000000001D /* ResultCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCard.swift; sourceTree = "<group>"; };
+		A1111111000000000000001E /* IconViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconViews.swift; sourceTree = "<group>"; };
+		A1111111000000000000001F /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
+		A11111110000000000000020 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		A11111110000000000000031 /* ProfilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesView.swift; sourceTree = "<group>"; };
+		A11111110000000000000032 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		A11111110000000000000033 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		A11111110000000000000034 /* HistoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailView.swift; sourceTree = "<group>"; };
+		A11111110000000000000035 /* KnowledgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeView.swift; sourceTree = "<group>"; };
+		A11111110000000000000036 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
+		A11111110000000000000037 /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
+		A11111110000000000000038 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		A11111110000000000000039 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
+		A11111110000000000000100 /* Ice Bait Calc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ice Bait Calc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A11111110000000000000200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A11111110000000000000300 = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000301 /* Ice Bait Calc */,
+				A11111110000000000000302 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A11111110000000000000301 /* Ice Bait Calc */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000303 /* App */,
+				A11111110000000000000304 /* Models */,
+				A11111110000000000000305 /* Views */,
+				A11111110000000000000306 /* Services */,
+				A11111110000000000000307 /* Theme */,
+				A11111110000000000000013 /* Assets.xcassets */,
+			);
+			path = "Ice Bait Calc";
+			sourceTree = "<group>";
+		};
+		A11111110000000000000302 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000100 /* Ice Bait Calc.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000303 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000011 /* IceBaitCalcApp.swift */,
+				A11111110000000000000012 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000304 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000015 /* FishType.swift */,
+				A11111110000000000000016 /* BaitType.swift */,
+				A11111110000000000000017 /* CalculationResult.swift */,
+				A11111110000000000000018 /* BaitProfile.swift */,
+				A11111110000000000000019 /* HistoryEntry.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000305 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000308 /* Components */,
+				A11111110000000000000309 /* Calculator */,
+				A1111111000000000000030A /* Profiles */,
+				A1111111000000000000030B /* History */,
+				A1111111000000000000030C /* Knowledge */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000306 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000037 /* CalculationService.swift */,
+				A11111110000000000000038 /* StorageService.swift */,
+				A11111110000000000000039 /* ProfileManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000307 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000014 /* AppTheme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000308 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A1111111000000000000001A /* CustomSlider.swift */,
+				A1111111000000000000001B /* PrimaryButton.swift */,
+				A1111111000000000000001C /* SelectionPicker.swift */,
+				A1111111000000000000001D /* ResultCard.swift */,
+				A1111111000000000000001E /* IconViews.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A11111110000000000000309 /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				A1111111000000000000001F /* CalculatorView.swift */,
+				A11111110000000000000020 /* ResultView.swift */,
+			);
+			path = Calculator;
+			sourceTree = "<group>";
+		};
+		A1111111000000000000030A /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000031 /* ProfilesView.swift */,
+				A11111110000000000000032 /* ProfileEditView.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		A1111111000000000000030B /* History */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000033 /* HistoryView.swift */,
+				A11111110000000000000034 /* HistoryDetailView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		A1111111000000000000030C /* Knowledge */ = {
+			isa = PBXGroup;
+			children = (
+				A11111110000000000000035 /* KnowledgeView.swift */,
+				A11111110000000000000036 /* ArticleView.swift */,
+			);
+			path = Knowledge;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A11111110000000000000400 /* Ice Bait Calc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A11111110000000000000600;
+			buildPhases = (
+				A11111110000000000000401 /* Sources */,
+				A11111110000000000000200 /* Frameworks */,
+				A11111110000000000000402 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ice Bait Calc";
+			productName = "Ice Bait Calc";
+			productReference = A11111110000000000000100 /* Ice Bait Calc.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A11111110000000000000500 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A11111110000000000000400 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A11111110000000000000501;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A11111110000000000000300;
+			productRefGroup = A11111110000000000000302 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A11111110000000000000400 /* Ice Bait Calc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A11111110000000000000402 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A11111110000000000000003 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A11111110000000000000401 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A11111110000000000000001 /* IceBaitCalcApp.swift in Sources */,
+				A11111110000000000000002 /* ContentView.swift in Sources */,
+				A11111110000000000000004 /* AppTheme.swift in Sources */,
+				A11111110000000000000005 /* FishType.swift in Sources */,
+				A11111110000000000000006 /* BaitType.swift in Sources */,
+				A11111110000000000000007 /* CalculationResult.swift in Sources */,
+				A11111110000000000000008 /* BaitProfile.swift in Sources */,
+				A11111110000000000000009 /* HistoryEntry.swift in Sources */,
+				A1111111000000000000000A /* CustomSlider.swift in Sources */,
+				A1111111000000000000000B /* PrimaryButton.swift in Sources */,
+				A1111111000000000000000C /* SelectionPicker.swift in Sources */,
+				A1111111000000000000000D /* ResultCard.swift in Sources */,
+				A1111111000000000000000E /* IconViews.swift in Sources */,
+				A1111111000000000000000F /* CalculatorView.swift in Sources */,
+				A11111110000000000000010 /* ResultView.swift in Sources */,
+				A11111110000000000000021 /* ProfilesView.swift in Sources */,
+				A11111110000000000000022 /* ProfileEditView.swift in Sources */,
+				A11111110000000000000023 /* HistoryView.swift in Sources */,
+				A11111110000000000000024 /* HistoryDetailView.swift in Sources */,
+				A11111110000000000000025 /* KnowledgeView.swift in Sources */,
+				A11111110000000000000026 /* ArticleView.swift in Sources */,
+				A11111110000000000000027 /* CalculationService.swift in Sources */,
+				A11111110000000000000028 /* StorageService.swift in Sources */,
+				A11111110000000000000029 /* ProfileManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A11111110000000000000601 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A11111110000000000000602 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A11111110000000000000603 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ice Bait Calc";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.app.Ice-Bait-Calc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A11111110000000000000604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Ice Bait Calc";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.app.Ice-Bait-Calc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A11111110000000000000501 /* Build configuration list for PBXProject "Ice Bait Calc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A11111110000000000000601 /* Debug */,
+				A11111110000000000000602 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A11111110000000000000600 /* Build configuration list for PBXNativeTarget "Ice Bait Calc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A11111110000000000000603 /* Debug */,
+				A11111110000000000000604 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A11111110000000000000500 /* Project object */;
+}
