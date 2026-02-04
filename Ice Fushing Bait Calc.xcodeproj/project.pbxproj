@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A11111110000000000000001 /* IceBaitCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000011 /* IceBaitCalcApp.swift */; };
+		A11111110000000000000001 /* IceFushingBaitCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000011 /* IceFushingBaitCalcApp.swift */; };
 		A11111110000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000012 /* ContentView.swift */; };
 		A11111110000000000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000013 /* Assets.xcassets */; };
 		A11111110000000000000004 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11111110000000000000014 /* AppTheme.swift */; };
@@ -35,7 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A11111110000000000000011 /* IceBaitCalcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceBaitCalcApp.swift; sourceTree = "<group>"; };
+		A11111110000000000000011 /* IceFushingBaitCalcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IceFushingBaitCalcApp.swift; sourceTree = "<group>"; };
 		A11111110000000000000012 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A11111110000000000000013 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A11111110000000000000014 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		A11111110000000000000037 /* CalculationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationService.swift; sourceTree = "<group>"; };
 		A11111110000000000000038 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		A11111110000000000000039 /* ProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManager.swift; sourceTree = "<group>"; };
-		A11111110000000000000100 /* Ice Bait Calc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ice Bait Calc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A11111110000000000000100 /* Ice Fushing Bait Calc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ice Fushing Bait Calc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +77,12 @@
 		A11111110000000000000300 = {
 			isa = PBXGroup;
 			children = (
-				A11111110000000000000301 /* Ice Bait Calc */,
+				A11111110000000000000301 /* Ice Fushing Bait Calc */,
 				A11111110000000000000302 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A11111110000000000000301 /* Ice Bait Calc */ = {
+		A11111110000000000000301 /* Ice Fushing Bait Calc */ = {
 			isa = PBXGroup;
 			children = (
 				A11111110000000000000303 /* App */,
@@ -92,13 +92,13 @@
 				A11111110000000000000307 /* Theme */,
 				A11111110000000000000013 /* Assets.xcassets */,
 			);
-			path = "Ice Bait Calc";
+			path = "Ice Fushing Bait Calc";
 			sourceTree = "<group>";
 		};
 		A11111110000000000000302 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A11111110000000000000100 /* Ice Bait Calc.app */,
+				A11111110000000000000100 /* Ice Fushing Bait Calc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,7 +106,7 @@
 		A11111110000000000000303 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				A11111110000000000000011 /* IceBaitCalcApp.swift */,
+				A11111110000000000000011 /* IceFushingBaitCalcApp.swift */,
 				A11111110000000000000012 /* ContentView.swift */,
 			);
 			path = App;
@@ -205,9 +205,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A11111110000000000000400 /* Ice Bait Calc */ = {
+		A11111110000000000000400 /* Ice Fushing Bait Calc */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A11111110000000000000600 /* Build configuration list for PBXNativeTarget "Ice Bait Calc" */;
+			buildConfigurationList = A11111110000000000000600 /* Build configuration list for PBXNativeTarget "Ice Fushing Bait Calc" */;
 			buildPhases = (
 				A11111110000000000000401 /* Sources */,
 				A11111110000000000000200 /* Frameworks */,
@@ -217,9 +217,9 @@
 			);
 			dependencies = (
 			);
-			name = "Ice Bait Calc";
-			productName = "Ice Bait Calc";
-			productReference = A11111110000000000000100 /* Ice Bait Calc.app */;
+			name = "Ice Fushing Bait Calc";
+			productName = "Ice Fushing Bait Calc";
+			productReference = A11111110000000000000100 /* Ice Fushing Bait Calc.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -237,7 +237,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A11111110000000000000501 /* Build configuration list for PBXProject "Ice Bait Calc" */;
+			buildConfigurationList = A11111110000000000000501 /* Build configuration list for PBXProject "Ice Fushing Bait Calc" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -250,7 +250,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A11111110000000000000400 /* Ice Bait Calc */,
+				A11111110000000000000400 /* Ice Fushing Bait Calc */,
 			);
 		};
 /* End PBXProject section */
@@ -271,7 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A11111110000000000000001 /* IceBaitCalcApp.swift in Sources */,
+				A11111110000000000000001 /* IceFushingBaitCalcApp.swift in Sources */,
 				A11111110000000000000002 /* ContentView.swift in Sources */,
 				A11111110000000000000004 /* AppTheme.swift in Sources */,
 				A11111110000000000000005 /* FishType.swift in Sources */,
@@ -425,7 +425,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ice Bait Calc";
+				INFOPLIST_KEY_CFBundleDisplayName = "Ice Fushing Bait Calc";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -458,7 +458,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Ice Bait Calc";
+				INFOPLIST_KEY_CFBundleDisplayName = "Ice Fushing Bait Calc";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -484,7 +484,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A11111110000000000000501 /* Build configuration list for PBXProject "Ice Bait Calc" */ = {
+		A11111110000000000000501 /* Build configuration list for PBXProject "Ice Fushing Bait Calc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A11111110000000000000601 /* Debug */,
@@ -493,7 +493,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A11111110000000000000600 /* Build configuration list for PBXNativeTarget "Ice Bait Calc" */ = {
+		A11111110000000000000600 /* Build configuration list for PBXNativeTarget "Ice Fushing Bait Calc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A11111110000000000000603 /* Debug */,

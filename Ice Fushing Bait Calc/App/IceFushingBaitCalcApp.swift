@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct IceBaitCalcApp: App {
+struct IceFushingBaitCalcApp: App {
     init() {
         configureAppearance()
     }

@@ -90,7 +90,7 @@ struct CalculatorView: View {
                     EmptyView()
                 }
             }
-            .navigationTitle("Ice Bait Calc")
+            .navigationTitle("Ice Fushing Bait Calc")
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showProfilePicker) {
                 ProfilePickerSheet(

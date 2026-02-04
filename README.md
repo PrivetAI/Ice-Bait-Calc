@@ -1,10 +1,10 @@
-# Ice Bait Calc - App Store Content
+# Ice Fushing Bait Calc - App Store Content
 
 ## Subtitle
 Calculate perfect bait amounts for ice fishing success
 
 ## Description
-Ice Bait Calc takes the guesswork out of bait preparation for your ice fishing trips. Whether you're planning a solo outing or a group expedition, this intelligent calculator helps you determine exactly how much bait you need based on fishing duration, number of anglers, target species, and fishing intensity.
+Ice Fushing Bait Calc takes the guesswork out of bait preparation for your ice fishing trips. Whether you're planning a solo outing or a group expedition, this intelligent calculator helps you determine exactly how much bait you need based on fishing duration, number of anglers, target species, and fishing intensity.
 
 **Key Features:**
 • Smart bait calculation based on trip parameters
@@ -21,10 +21,10 @@ Ice Bait Calc takes the guesswork out of bait preparation for your ice fishing t
 - Learning optimal bait amounts for different species
 - Tracking what works best for your fishing style
 
-Stop bringing too much or too little bait. Ice Bait Calc ensures you have exactly what you need for a successful day on the ice.
+Stop bringing too much or too little bait. Ice Fushing Bait Calc ensures you have exactly what you need for a successful day on the ice.
 
 ## Promotional Text
-Master your bait preparation! Ice Bait Calc's intelligent algorithm considers your fishing duration, group size, target species, and fishing intensity to calculate the perfect bait amount. Save money, reduce waste, and never run out of bait on the ice again.
+Master your bait preparation! Ice Fushing Bait Calc's intelligent algorithm considers your fishing duration, group size, target species, and fishing intensity to calculate the perfect bait amount. Save money, reduce waste, and never run out of bait on the ice again.
 
 ## Keywords
 ice fishing, bait calculator, fishing app, ice fishing bait, fishing planner, bait amount, fishing trip, winter fishing, ice angling, fishing tools, bait preparation, fishing calculator, ice fishing gear, fishing guide, outdoor sports
