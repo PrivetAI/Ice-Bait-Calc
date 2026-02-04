@@ -78,7 +78,6 @@ struct ProfileEditView: View {
                         // Save button
                         PrimaryButton(
                             title: isEditing ? "Update Profile" : "Create Profile",
-                            icon: AnyView(SaveIcon(size: 24, color: .white)),
                             action: saveProfile
                         )
                         .padding(.top, 8)

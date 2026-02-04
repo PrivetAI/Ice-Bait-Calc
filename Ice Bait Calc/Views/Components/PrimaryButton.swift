@@ -2,12 +2,12 @@ import SwiftUI
 
 struct PrimaryButton: View {
     let title: String
-    let icon: AnyView?
+    var iconView: AnyView? = nil
     let action: () -> Void
     var isFullWidth: Bool = true
-    var style: ButtonStyle = .primary
+    var style: ButtonStyleType = .primary
     
-    enum ButtonStyle {
+    enum ButtonStyleType {
         case primary
         case secondary
         case accent
@@ -36,8 +36,8 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 12) {
-                if let icon = icon {
-                    icon
+                if let iconView = iconView {
+                    iconView
                 }
                 Text(title)
                     .font(.headline)
@@ -59,6 +59,17 @@ struct PrimaryButton: View {
             )
         }
         .buttonStyle(ScaleButtonStyle())
+    }
+}
+
+// Convenience initializer without icon
+extension PrimaryButton {
+    init(title: String, action: @escaping () -> Void, isFullWidth: Bool = true, style: ButtonStyleType = .primary) {
+        self.title = title
+        self.iconView = nil
+        self.action = action
+        self.isFullWidth = isFullWidth
+        self.style = style
     }
 }
 

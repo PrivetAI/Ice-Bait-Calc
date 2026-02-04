@@ -11,11 +11,19 @@ struct HistoryView: View {
                     .ignoresSafeArea()
                 
                 if profileManager.history.isEmpty {
-                    EmptyStateView(
-                        icon: AnyView(HistoryIcon(size: 64, color: AppTheme.Colors.textSecondary)),
-                        title: "No History Yet",
-                        message: "Your saved calculations will appear here"
-                    )
+                    VStack(spacing: 16) {
+                        HistoryIcon(size: 64, color: AppTheme.Colors.textSecondary)
+                        
+                        Text("No History Yet")
+                            .font(.headline)
+                            .foregroundColor(AppTheme.Colors.textPrimary)
+                        
+                        Text("Your saved calculations will appear here")
+                            .font(.subheadline)
+                            .foregroundColor(AppTheme.Colors.textSecondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 32)
+                    }
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 12) {
@@ -76,9 +84,26 @@ struct HistoryCard: View {
             }
             
             HStack(spacing: 16) {
-                Label("\(entry.result.hours)h", icon: AnyView(ClockIcon(size: 16, color: AppTheme.Colors.accent)))
-                Label("\(entry.result.holes) holes", icon: AnyView(HoleIcon(size: 16, color: AppTheme.Colors.success)))
-                Label(entry.result.fishType.rawValue, icon: AnyView(FishIcon(size: 16, color: AppTheme.Colors.primary)))
+                HStack(spacing: 4) {
+                    ClockIcon(size: 16, color: AppTheme.Colors.accent)
+                    Text("\(entry.result.hours)h")
+                        .font(.caption)
+                        .foregroundColor(AppTheme.Colors.textSecondary)
+                }
+                
+                HStack(spacing: 4) {
+                    HoleIcon(size: 16, color: AppTheme.Colors.success)
+                    Text("\(entry.result.holes) holes")
+                        .font(.caption)
+                        .foregroundColor(AppTheme.Colors.textSecondary)
+                }
+                
+                HStack(spacing: 4) {
+                    FishIcon(size: 16, color: AppTheme.Colors.primary)
+                    Text(entry.result.fishType.rawValue)
+                        .font(.caption)
+                        .foregroundColor(AppTheme.Colors.textSecondary)
+                }
             }
             
             if !entry.notes.isEmpty {

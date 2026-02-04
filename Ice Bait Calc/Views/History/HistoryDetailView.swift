@@ -76,7 +76,6 @@ struct HistoryDetailView: View {
                         // Save button
                         PrimaryButton(
                             title: "Save Notes",
-                            icon: AnyView(SaveIcon(size: 24, color: .white)),
                             action: saveNotes
                         )
                     }

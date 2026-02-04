@@ -12,14 +12,40 @@ struct ProfilesView: View {
                     .ignoresSafeArea()
                 
                 if profileManager.profiles.isEmpty {
-                    EmptyStateView(
-                        icon: AnyView(ProfileIcon(size: 64, color: AppTheme.Colors.textSecondary)),
-                        title: "No Profiles Yet",
-                        message: "Create a profile to quickly load your favorite fishing settings"
-                    )
+                    VStack(spacing: 16) {
+                        ProfileIcon(size: 64, color: AppTheme.Colors.textSecondary)
+                        
+                        Text("No Profiles Yet")
+                            .font(.headline)
+                            .foregroundColor(AppTheme.Colors.textPrimary)
+                        
+                        Text("Profiles let you save your favorite fishing setups. Create a profile once, then quickly load it in the Calculator tab instead of entering settings manually each time.")
+                            .font(.subheadline)
+                            .foregroundColor(AppTheme.Colors.textSecondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 32)
+                        
+                        PrimaryButton(
+                            title: "Create First Profile",
+                            action: { showAddProfile = true },
+                            isFullWidth: false
+                        )
+                        .padding(.top, 8)
+                    }
                 } else {
                     ScrollView {
-                        LazyVStack(spacing: 12) {
+                        VStack(spacing: 12) {
+                            // Explanation card
+                            HStack {
+                                Text("Tap a profile in the Calculator tab to quickly load its settings")
+                                    .font(.caption)
+                                    .foregroundColor(AppTheme.Colors.textSecondary)
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(AppTheme.Colors.surface)
+                            .cornerRadius(AppTheme.Dimensions.cornerRadius)
+                            
                             ForEach(profileManager.profiles) { profile in
                                 ProfileCard(
                                     profile: profile,
@@ -87,8 +113,19 @@ struct ProfileCard: View {
             }
             
             HStack(spacing: 16) {
-                Label("\(profile.defaultHours)h", icon: AnyView(ClockIcon(size: 16, color: AppTheme.Colors.accent)))
-                Label("\(profile.defaultHoles) holes", icon: AnyView(HoleIcon(size: 16, color: AppTheme.Colors.success)))
+                HStack(spacing: 4) {
+                    ClockIcon(size: 16, color: AppTheme.Colors.accent)
+                    Text("\(profile.defaultHours)h")
+                        .font(.caption)
+                        .foregroundColor(AppTheme.Colors.textSecondary)
+                }
+                
+                HStack(spacing: 4) {
+                    HoleIcon(size: 16, color: AppTheme.Colors.success)
+                    Text("\(profile.defaultHoles) holes")
+                        .font(.caption)
+                        .foregroundColor(AppTheme.Colors.textSecondary)
+                }
             }
         }
         .padding(AppTheme.Dimensions.padding)
@@ -100,47 +137,6 @@ struct ProfileCard: View {
                 primaryButton: .destructive(Text("Delete")) { onDelete() },
                 secondaryButton: .cancel()
             )
-        }
-    }
-}
-
-struct Label: View {
-    let text: String
-    let icon: AnyView
-    
-    init(_ text: String, icon: AnyView) {
-        self.text = text
-        self.icon = icon
-    }
-    
-    var body: some View {
-        HStack(spacing: 4) {
-            icon
-            Text(text)
-                .font(.caption)
-                .foregroundColor(AppTheme.Colors.textSecondary)
-        }
-    }
-}
-
-struct EmptyStateView: View {
-    let icon: AnyView
-    let title: String
-    let message: String
-    
-    var body: some View {
-        VStack(spacing: 16) {
-            icon
-            
-            Text(title)
-                .font(.headline)
-                .foregroundColor(AppTheme.Colors.textPrimary)
-            
-            Text(message)
-                .font(.subheadline)
-                .foregroundColor(AppTheme.Colors.textSecondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
         }
     }
 }

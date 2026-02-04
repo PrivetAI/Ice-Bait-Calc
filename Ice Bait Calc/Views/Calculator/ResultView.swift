@@ -65,7 +65,6 @@ struct ResultView: View {
                         // Save button
                         PrimaryButton(
                             title: "Save Calculation",
-                            icon: AnyView(SaveIcon(size: 24, color: .white)),
                             action: saveCalculation,
                             style: .accent
                         )
