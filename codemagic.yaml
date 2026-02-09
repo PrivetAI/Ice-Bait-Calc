@@ -1,0 +1,35 @@
+workflows:
+  ios-native-quick-start:
+    name: iOS Native
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Ice Fushing Bait Calc
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.boththick.ice-fushing-bait-calc
+      vars:
+        BUNDLE_ID: "com.boththick.ice-fushing-bait-calc"
+        XCODE_WORKSPACE: "Ice Fushing Bait Calc.xcodeproj"
+        XCODE_SCHEME: "Ice Fushing Bait Calc"
+        APP_STORE_APPLE_ID: 6758949419
+      xcode: latest 
+      cocoapods: default
+    scripts:
+      - name: Set up provisioning profiles settings on Xcode project
+        script: xcode-project use-profiles
+      - name: Build ipa for distribution
+        script: |
+          xcode-project build-ipa \
+            --project "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
