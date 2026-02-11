@@ -1,86 +1,38 @@
 import Foundation
 
-class StorageService {
-    static let shared = StorageService()
-    
-    private let profilesKey = "bait_profiles"
-    private let historyKey = "calculation_history"
-    
+// Persistence layer — UserDefaults backed
+final class Vault {
+    static let shared = Vault()
     private init() {}
-    
-    // MARK: - Profiles
-    
-    func saveProfiles(_ profiles: [BaitProfile]) {
-        if let data = try? JSONEncoder().encode(profiles) {
-            UserDefaults.standard.set(data, forKey: profilesKey)
-        }
+
+    private let journalKey = "vault_journal_entries_v2"
+    private let recipeKey = "vault_bait_recipes_v2"
+
+    // MARK: - Journal
+
+    func loadJournal() -> [JournalEntry] {
+        guard let data = UserDefaults.standard.data(forKey: journalKey),
+              let list = try? JSONDecoder().decode([JournalEntry].self, from: data) else { return [] }
+        return list.sorted { $0.loggedAt > $1.loggedAt }
     }
-    
-    func loadProfiles() -> [BaitProfile] {
-        guard let data = UserDefaults.standard.data(forKey: profilesKey),
-              let profiles = try? JSONDecoder().decode([BaitProfile].self, from: data) else {
-            return []
-        }
-        return profiles
-    }
-    
-    func addProfile(_ profile: BaitProfile) {
-        var profiles = loadProfiles()
-        profiles.append(profile)
-        saveProfiles(profiles)
-    }
-    
-    func updateProfile(_ profile: BaitProfile) {
-        var profiles = loadProfiles()
-        if let index = profiles.firstIndex(where: { $0.id == profile.id }) {
-            profiles[index] = profile
-            saveProfiles(profiles)
-        }
-    }
-    
-    func deleteProfile(_ profile: BaitProfile) {
-        var profiles = loadProfiles()
-        profiles.removeAll { $0.id == profile.id }
-        saveProfiles(profiles)
-    }
-    
-    // MARK: - History
-    
-    func saveHistory(_ entries: [HistoryEntry]) {
+
+    func saveJournal(_ entries: [JournalEntry]) {
         if let data = try? JSONEncoder().encode(entries) {
-            UserDefaults.standard.set(data, forKey: historyKey)
+            UserDefaults.standard.set(data, forKey: journalKey)
         }
     }
-    
-    func loadHistory() -> [HistoryEntry] {
-        guard let data = UserDefaults.standard.data(forKey: historyKey),
-              let entries = try? JSONDecoder().decode([HistoryEntry].self, from: data) else {
-            return []
+
+    // MARK: - Recipes
+
+    func loadRecipes() -> [BaitRecipe] {
+        guard let data = UserDefaults.standard.data(forKey: recipeKey),
+              let list = try? JSONDecoder().decode([BaitRecipe].self, from: data) else { return [] }
+        return list.sorted { $0.createdAt > $1.createdAt }
+    }
+
+    func saveRecipes(_ recipes: [BaitRecipe]) {
+        if let data = try? JSONEncoder().encode(recipes) {
+            UserDefaults.standard.set(data, forKey: recipeKey)
         }
-        return entries.sorted { $0.createdAt > $1.createdAt }
-    }
-    
-    func addHistoryEntry(_ entry: HistoryEntry) {
-        var entries = loadHistory()
-        entries.insert(entry, at: 0)
-        saveHistory(entries)
-    }
-    
-    func updateHistoryEntry(_ entry: HistoryEntry) {
-        var entries = loadHistory()
-        if let index = entries.firstIndex(where: { $0.id == entry.id }) {
-            entries[index] = entry
-            saveHistory(entries)
-        }
-    }
-    
-    func deleteHistoryEntry(_ entry: HistoryEntry) {
-        var entries = loadHistory()
-        entries.removeAll { $0.id == entry.id }
-        saveHistory(entries)
-    }
-    
-    func clearHistory() {
-        saveHistory([])
     }
 }

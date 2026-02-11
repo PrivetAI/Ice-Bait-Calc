@@ -1,145 +1,135 @@
 import SwiftUI
 
-struct HistoryDetailView: View {
-    @State var entry: HistoryEntry
-    @StateObject private var profileManager = ProfileManager.shared
-    @Environment(\.presentationMode) var presentationMode
-    @State private var notes: String = ""
-    @State private var selectedFeedback: FeedbackRating?
-    
+// Detail sheet for a journal entry — view and edit
+struct EntryDetailSheet: View {
+    @ObservedObject var state: AppState
+    let entry: JournalEntry
+    @Environment(\.presentationMode) var dismiss
+    @State private var showEdit = false
+    @State private var confirmDelete = false
+
     var body: some View {
         NavigationView {
             ZStack {
-                AppTheme.Colors.background
-                    .ignoresSafeArea()
-                
+                AppTheme.Palette.parchment.ignoresSafeArea()
+
                 ScrollView {
-                    VStack(spacing: 20) {
-                        // Result summary
-                        LargeResultCard(
-                            value: String(format: "%.0f", entry.result.totalBait),
-                            unit: "grams",
-                            subtitle: entry.result.visualEquivalent
-                        )
-                        
-                        // Parameters
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Parameters")
-                                .font(.headline)
-                                .foregroundColor(AppTheme.Colors.textPrimary)
-                            
-                            VStack(spacing: 8) {
-                                ParameterRow(label: "Date", value: entry.formattedDate)
-                                ParameterRow(label: "Duration", value: "\(entry.result.hours) hours")
-                                ParameterRow(label: "Holes", value: "\(entry.result.holes)")
-                                ParameterRow(label: "Fish", value: entry.result.fishType.rawValue)
-                                ParameterRow(label: "Bait", value: entry.result.baitType.rawValue)
-                            }
-                            .padding(AppTheme.Dimensions.padding)
-                            .cardStyle()
-                        }
-                        
-                        // Feedback section
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("How was the bait amount?")
-                                .font(.headline)
-                                .foregroundColor(AppTheme.Colors.textPrimary)
-                            
-                            HStack(spacing: 12) {
-                                ForEach(FeedbackRating.allCases, id: \.self) { rating in
-                                    FeedbackButton(
-                                        rating: rating,
-                                        isSelected: selectedFeedback == rating,
-                                        action: { selectedFeedback = rating }
-                                    )
+                    VStack(spacing: 14) {
+                        // Header
+                        WoodCard {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(entry.species.rawValue)
+                                        .font(.system(size: 22, weight: .heavy, design: .rounded))
+                                        .foregroundColor(AppTheme.Palette.charcoal)
+                                    Text(entry.material.rawValue)
+                                        .font(.system(size: 16, weight: .medium, design: .rounded))
+                                        .foregroundColor(AppTheme.Palette.bark.opacity(0.7))
                                 }
+                                Spacer()
+                                StarDisplayView(rating: entry.starRating, sz: 20)
                             }
                         }
-                        
-                        // Notes section
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Notes")
-                                .font(.headline)
-                                .foregroundColor(AppTheme.Colors.textPrimary)
-                            
-                            TextEditor(text: $notes)
-                                .frame(minHeight: 100)
-                                .padding(8)
-                                .background(AppTheme.Colors.cardBackground)
-                                .cornerRadius(AppTheme.Dimensions.cornerRadius)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: AppTheme.Dimensions.cornerRadius)
-                                        .stroke(AppTheme.Colors.surface, lineWidth: 1)
-                                )
+
+                        // Stats
+                        WoodCard {
+                            DetailRow(label: "Date", value: entry.formattedDate)
+                            DetailRow(label: "Duration", value: "\(entry.durationHours) hours")
+                            DetailRow(label: "Holes", value: "\(entry.holeCount)")
+                            if entry.baitUsedGrams > 0 {
+                                DetailRow(label: "Bait Used", value: "\(Int(entry.baitUsedGrams)) g")
+                            }
+                            DetailRow(label: "Effectiveness", value: entry.effectiveness.rawValue)
+                            DetailRow(label: "Weather", value: entry.weatherTag.rawValue)
                         }
-                        
-                        // Save button
-                        PrimaryButton(
-                            title: "Save Notes",
-                            action: saveNotes
-                        )
+
+                        // Estimate comparison
+                        let est = BaitCalculator.estimate(species: entry.species, material: entry.material, hours: entry.durationHours, holes: entry.holeCount)
+                        WoodCard {
+                            Text("Estimated vs Actual")
+                                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                .foregroundColor(AppTheme.Palette.charcoal)
+                            HStack {
+                                VStack(spacing: 2) {
+                                    Text("\(Int(est.total))")
+                                        .font(.system(size: 26, weight: .heavy, design: .rounded))
+                                        .foregroundColor(AppTheme.Palette.warmOrange)
+                                    Text("estimated g")
+                                        .font(.system(size: 11, design: .rounded))
+                                        .foregroundColor(AppTheme.Palette.bark.opacity(0.6))
+                                }
+                                .frame(maxWidth: .infinity)
+
+                                VStack(spacing: 2) {
+                                    Text(entry.baitUsedGrams > 0 ? "\(Int(entry.baitUsedGrams))" : "--")
+                                        .font(.system(size: 26, weight: .heavy, design: .rounded))
+                                        .foregroundColor(AppTheme.Palette.forestGreen)
+                                    Text("actual g")
+                                        .font(.system(size: 11, design: .rounded))
+                                        .foregroundColor(AppTheme.Palette.bark.opacity(0.6))
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                        }
+
+                        if !entry.memo.isEmpty {
+                            WoodCard {
+                                Text("Notes")
+                                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                                    .foregroundColor(AppTheme.Palette.charcoal)
+                                Text(entry.memo)
+                                    .font(.system(size: 14, design: .rounded))
+                                    .foregroundColor(AppTheme.Palette.charcoal.opacity(0.85))
+                                    .lineSpacing(3)
+                            }
+                        }
+
+                        HStack(spacing: 12) {
+                            RusticButton(label: "Edit", action: { showEdit = true }, tone: .secondary)
+                            RusticButton(label: "Delete", action: { confirmDelete = true }, tone: .danger)
+                        }
                     }
-                    .padding(AppTheme.Dimensions.padding)
+                    .padding(AppTheme.Spacing.md)
                 }
             }
-            .navigationTitle("Details")
+            .navigationTitle("Trip Details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    Button("Done") { dismiss.wrappedValue.dismiss() }
+                        .foregroundColor(AppTheme.Palette.bark)
                 }
             }
-            .onAppear {
-                notes = entry.notes
-                selectedFeedback = entry.feedbackRating
+            .sheet(isPresented: $showEdit) {
+                EntryComposerView(state: state, existing: entry)
+            }
+            .alert(isPresented: $confirmDelete) {
+                Alert(
+                    title: Text("Delete Entry"),
+                    message: Text("This cannot be undone."),
+                    primaryButton: .destructive(Text("Delete")) {
+                        state.removeJournalEntry(entry)
+                        dismiss.wrappedValue.dismiss()
+                    },
+                    secondaryButton: .cancel()
+                )
             }
         }
-    }
-    
-    private func saveNotes() {
-        entry.notes = notes
-        if let feedback = selectedFeedback {
-            entry.feedbackRating = feedback
-        }
-        entry.updatedAt = Date()
-        profileManager.updateHistoryEntry(entry)
-        presentationMode.wrappedValue.dismiss()
     }
 }
 
-struct FeedbackButton: View {
-    let rating: FeedbackRating
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var color: Color {
-        switch rating {
-        case .tooMuch:
-            return AppTheme.Colors.warning
-        case .perfect:
-            return AppTheme.Colors.success
-        case .notEnough:
-            return AppTheme.Colors.secondary
-        }
-    }
-    
+struct DetailRow: View {
+    let label: String
+    let value: String
     var body: some View {
-        Button(action: action) {
-            VStack(spacing: 4) {
-                Text(rating.rawValue)
-                    .font(.subheadline)
-                    .fontWeight(isSelected ? .semibold : .regular)
-            }
-            .foregroundColor(isSelected ? .white : color)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? color : color.opacity(0.15))
-            )
+        HStack {
+            Text(label)
+                .font(.system(size: 14, design: .rounded))
+                .foregroundColor(AppTheme.Palette.bark.opacity(0.7))
+            Spacer()
+            Text(value)
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .foregroundColor(AppTheme.Palette.charcoal)
         }
-        .buttonStyle(ScaleButtonStyle())
     }
 }

@@ -3,36 +3,29 @@ import SwiftUI
 @main
 struct IceFushingBaitCalcApp: App {
     init() {
-        configureAppearance()
+        setupAppearance()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.light)
         }
     }
-    
-    private func configureAppearance() {
-        // Configure navigation bar
-        let navAppearance = UINavigationBarAppearance()
-        navAppearance.configureWithOpaqueBackground()
-        navAppearance.backgroundColor = UIColor(AppTheme.Colors.background)
-        navAppearance.titleTextAttributes = [.foregroundColor: UIColor(AppTheme.Colors.textPrimary)]
-        navAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(AppTheme.Colors.textPrimary)]
-        
-        UINavigationBar.appearance().standardAppearance = navAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
-        UINavigationBar.appearance().compactAppearance = navAppearance
-        
-        // Configure tab bar
-        let tabAppearance = UITabBarAppearance()
-        tabAppearance.configureWithOpaqueBackground()
-        tabAppearance.backgroundColor = UIColor(AppTheme.Colors.cardBackground)
-        
-        UITabBar.appearance().standardAppearance = tabAppearance
-        if #available(iOS 15.0, *) {
-            UITabBar.appearance().scrollEdgeAppearance = tabAppearance
-        }
+
+    private func setupAppearance() {
+        let bark = UIColor(red: 101/255, green: 67/255, blue: 33/255, alpha: 1)
+        let cream = UIColor(red: 255/255, green: 243/255, blue: 224/255, alpha: 1)
+
+        let nav = UINavigationBarAppearance()
+        nav.configureWithOpaqueBackground()
+        nav.backgroundColor = cream
+        nav.titleTextAttributes = [.foregroundColor: bark]
+        nav.largeTitleTextAttributes = [.foregroundColor: bark]
+
+        UINavigationBar.appearance().standardAppearance = nav
+        UINavigationBar.appearance().scrollEdgeAppearance = nav
+        UINavigationBar.appearance().compactAppearance = nav
+        UINavigationBar.appearance().tintColor = bark
     }
 }

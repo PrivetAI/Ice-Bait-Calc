@@ -1,64 +1,69 @@
 import Foundation
 
-struct CalculationResult: Codable, Identifiable {
+// A saved bait recipe — a reusable combination of species + material + settings
+struct BaitRecipe: Codable, Identifiable {
     let id: UUID
-    let fishType: FishType
-    let baitType: BaitType
-    let hours: Int
-    let holes: Int
-    let totalBait: Double
-    let startFeed: Double
-    let hourlyFeed: Double
-    let calculatedAt: Date
-    
+    var title: String
+    var species: FishSpecies
+    var material: BaitMaterial
+    var durationHours: Int
+    var holeCount: Int
+    var personalNotes: String
+    var starRating: Int          // 1-5
+    var createdAt: Date
+    var updatedAt: Date
+
     init(
         id: UUID = UUID(),
-        fishType: FishType,
-        baitType: BaitType,
-        hours: Int,
-        holes: Int,
-        totalBait: Double,
-        startFeed: Double,
-        hourlyFeed: Double,
-        calculatedAt: Date = Date()
+        title: String,
+        species: FishSpecies,
+        material: BaitMaterial,
+        durationHours: Int = 4,
+        holeCount: Int = 3,
+        personalNotes: String = "",
+        starRating: Int = 3,
+        createdAt: Date = Date(),
+        updatedAt: Date = Date()
     ) {
         self.id = id
-        self.fishType = fishType
-        self.baitType = baitType
-        self.hours = hours
-        self.holes = holes
-        self.totalBait = totalBait
-        self.startFeed = startFeed
-        self.hourlyFeed = hourlyFeed
-        self.calculatedAt = calculatedAt
+        self.title = title
+        self.species = species
+        self.material = material
+        self.durationHours = durationHours
+        self.holeCount = holeCount
+        self.personalNotes = personalNotes
+        self.starRating = min(5, max(1, starRating))
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
-    
-    var matchboxes: Double {
-        totalBait / 20.0
+
+    // Computed bait amounts
+    var startFeed: Double {
+        let base = material.rateFor(species)
+        return base * Double(holeCount) * 1.5
     }
-    
-    var cups: Double {
-        totalBait / 150.0
+
+    var hourlyFeed: Double {
+        material.rateFor(species) * Double(holeCount)
     }
-    
-    var visualEquivalent: String {
-        if totalBait < 30 {
-            return "About 1-2 matchboxes"
-        } else if totalBait < 75 {
-            return "About \(Int(matchboxes.rounded())) matchboxes"
-        } else if totalBait < 150 {
-            return "About half a cup"
-        } else if totalBait < 300 {
-            return "About \(Int(cups.rounded())) cup(s)"
-        } else {
-            return "About \(Int(cups.rounded())) cups"
-        }
+
+    var totalGrams: Double {
+        startFeed + hourlyFeed * Double(max(durationHours - 1, 0))
     }
-    
+
+    var portionDescription: String {
+        let boxes = totalGrams / 20.0
+        let cups = totalGrams / 150.0
+        if totalGrams < 30 { return "1-2 matchboxes" }
+        if totalGrams < 75 { return "\(Int(boxes.rounded())) matchboxes" }
+        if totalGrams < 150 { return "About half a cup" }
+        return "\(Int(cups.rounded())) cup(s)"
+    }
+
     var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: calculatedAt)
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        f.timeStyle = .short
+        return f.string(from: createdAt)
     }
 }

@@ -1,83 +1,74 @@
 import SwiftUI
 
-struct ResultCard: View {
-    let title: String
-    let value: String
-    let subtitle: String?
-    let icon: AnyView?
-    var accentColor: Color = AppTheme.Colors.primary
-    
+// WoodCard — a rounded card with wood-grain background
+struct WoodCard<Content: View>: View {
+    let content: () -> Content
+
+    init(@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+    }
+
     var body: some View {
-        VStack(spacing: 8) {
-            if let icon = icon {
-                icon
-            }
-            
-            Text(value)
-                .font(.system(size: 32, weight: .bold, design: .rounded))
-                .foregroundColor(accentColor)
-            
-            Text(title)
-                .font(.subheadline)
-                .fontWeight(.medium)
-                .foregroundColor(AppTheme.Colors.textPrimary)
-            
-            if let subtitle = subtitle {
-                Text(subtitle)
-                    .font(.caption)
-                    .foregroundColor(AppTheme.Colors.textSecondary)
-            }
+        VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
+            content()
         }
-        .frame(maxWidth: .infinity)
-        .padding(AppTheme.Dimensions.padding)
-        .cardStyle()
+        .padding(AppTheme.Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            ZStack {
+                RoundedRectangle(cornerRadius: AppTheme.Radius.card)
+                    .fill(AppTheme.Palette.cream)
+                // faint grain overlay
+                RoundedRectangle(cornerRadius: AppTheme.Radius.card)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                AppTheme.Palette.wheat.opacity(0.4),
+                                AppTheme.Palette.cream.opacity(0.1),
+                                AppTheme.Palette.wheat.opacity(0.3)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+            }
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: AppTheme.Radius.card)
+                .stroke(AppTheme.Palette.bark.opacity(0.18), lineWidth: 1)
+        )
+        .shadow(color: AppTheme.Palette.shadow.opacity(0.12), radius: 6, x: 0, y: 3)
     }
 }
 
-struct LargeResultCard: View {
-    let value: String
-    let unit: String
-    let subtitle: String
-    
+// Star rating view (interactive)
+struct StarRatingView: View {
+    @Binding var rating: Int
+    var maxStars: Int = 5
+    var sz: CGFloat = 28
+
     var body: some View {
-        VStack(spacing: 12) {
-            HStack(alignment: .lastTextBaseline, spacing: 4) {
-                Text(value)
-                    .font(.system(size: 64, weight: .bold, design: .rounded))
-                    .foregroundColor(AppTheme.Colors.primary)
-                
-                Text(unit)
-                    .font(.title2)
-                    .fontWeight(.medium)
-                    .foregroundColor(AppTheme.Colors.textSecondary)
+        HStack(spacing: 4) {
+            ForEach(1...maxStars, id: \.self) { star in
+                Button(action: { rating = star }) {
+                    IcoStar(sz: sz, filled: star <= rating)
+                }
+                .buttonStyle(DepressStyle())
             }
-            
-            Text(subtitle)
-                .font(.headline)
-                .foregroundColor(AppTheme.Colors.textSecondary)
-                .multilineTextAlignment(.center)
         }
-        .frame(maxWidth: .infinity)
-        .padding(AppTheme.Dimensions.largePadding)
-        .background(
-            RoundedRectangle(cornerRadius: AppTheme.Dimensions.cardCornerRadius)
-                .fill(
-                    LinearGradient(
-                        colors: [AppTheme.Colors.surface, AppTheme.Colors.cardBackground],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: AppTheme.Dimensions.cardCornerRadius)
-                .stroke(AppTheme.Colors.primary.opacity(0.2), lineWidth: 2)
-        )
-        .shadow(
-            color: AppTheme.Colors.primary.opacity(0.1),
-            radius: AppTheme.Shadows.cardShadowRadius,
-            x: 0,
-            y: AppTheme.Shadows.cardShadowY
-        )
+    }
+}
+
+// Read-only star display
+struct StarDisplayView: View {
+    let rating: Int
+    var sz: CGFloat = 16
+
+    var body: some View {
+        HStack(spacing: 2) {
+            ForEach(1...5, id: \.self) { star in
+                IcoStar(sz: sz, filled: star <= rating)
+            }
+        }
     }
 }

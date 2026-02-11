@@ -1,540 +1,251 @@
 import SwiftUI
 
-// MARK: - Tab Bar Icons (using Image for tab items)
-struct TabIconCalculator: View {
+// MARK: - All-new shape-based icons (no SF Symbols, no emoji)
+
+struct IcoFish: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.forestGreen
     var body: some View {
-        Image(uiImage: createCalculatorImage())
-            .renderingMode(.template)
-    }
-    
-    private func createCalculatorImage() -> UIImage {
-        let size = CGSize(width: 24, height: 24)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            let ctx = context.cgContext
-            let color = UIColor.black
-            
-            // Body
-            ctx.setFillColor(color.cgColor)
-            ctx.fill(CGRect(x: 4, y: 2, width: 16, height: 20))
-            
-            // Screen
-            ctx.setFillColor(UIColor.white.cgColor)
-            ctx.fill(CGRect(x: 6, y: 4, width: 12, height: 5))
-            
-            // Buttons
-            ctx.setFillColor(UIColor.white.cgColor)
-            let positions: [(CGFloat, CGFloat)] = [
-                (7, 11), (12, 11), (17, 11),
-                (7, 14), (12, 14), (17, 14),
-                (7, 17), (12, 17), (17, 17)
-            ]
-            for (x, y) in positions {
-                ctx.fillEllipse(in: CGRect(x: x - 1.5, y: y - 1.5, width: 3, height: 3))
-            }
+        Canvas { ctx, size in
+            let w = size.width; let h = size.height
+            var body = Path()
+            body.addEllipse(in: CGRect(x: w * 0.2, y: h * 0.25, width: w * 0.55, height: h * 0.5))
+            ctx.fill(body, with: .color(tint))
+            // tail
+            var tail = Path()
+            tail.move(to: CGPoint(x: w * 0.15, y: h * 0.5))
+            tail.addLine(to: CGPoint(x: 0, y: h * 0.2))
+            tail.addLine(to: CGPoint(x: 0, y: h * 0.8))
+            tail.closeSubpath()
+            ctx.fill(tail, with: .color(tint))
+            // eye
+            var eye = Path()
+            eye.addEllipse(in: CGRect(x: w * 0.58, y: h * 0.38, width: w * 0.1, height: w * 0.1))
+            ctx.fill(eye, with: .color(.white))
+            // fin
+            var fin = Path()
+            fin.move(to: CGPoint(x: w * 0.4, y: h * 0.25))
+            fin.addLine(to: CGPoint(x: w * 0.5, y: h * 0.08))
+            fin.addLine(to: CGPoint(x: w * 0.6, y: h * 0.28))
+            fin.closeSubpath()
+            ctx.fill(fin, with: .color(tint.opacity(0.7)))
         }
+        .frame(width: sz, height: sz)
     }
 }
 
-struct TabIconProfile: View {
+struct IcoWorm: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.dustyRed
     var body: some View {
-        Image(uiImage: createProfileImage())
-            .renderingMode(.template)
-    }
-    
-    private func createProfileImage() -> UIImage {
-        let size = CGSize(width: 24, height: 24)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            let ctx = context.cgContext
-            let color = UIColor.black
-            
-            ctx.setFillColor(color.cgColor)
-            
-            // Folder shape
-            ctx.move(to: CGPoint(x: 2, y: 8))
-            ctx.addLine(to: CGPoint(x: 2, y: 20))
-            ctx.addLine(to: CGPoint(x: 22, y: 20))
-            ctx.addLine(to: CGPoint(x: 22, y: 8))
-            ctx.addLine(to: CGPoint(x: 12, y: 8))
-            ctx.addLine(to: CGPoint(x: 10, y: 5))
-            ctx.addLine(to: CGPoint(x: 2, y: 5))
-            ctx.closePath()
-            ctx.fillPath()
+        Canvas { ctx, size in
+            let w = size.width; let h = size.height
+            var p = Path()
+            p.move(to: CGPoint(x: w * 0.1, y: h * 0.8))
+            p.addCurve(to: CGPoint(x: w * 0.9, y: h * 0.2),
+                       control1: CGPoint(x: w * 0.25, y: h * 0.2),
+                       control2: CGPoint(x: w * 0.7, y: h * 0.85))
+            ctx.stroke(p, with: .color(tint), lineWidth: sz * 0.12)
+            var head = Path()
+            head.addEllipse(in: CGRect(x: w * 0.82, y: h * 0.12, width: w * 0.14, height: w * 0.14))
+            ctx.fill(head, with: .color(tint))
         }
+        .frame(width: sz, height: sz)
     }
 }
 
-struct TabIconHistory: View {
-    var body: some View {
-        Image(uiImage: createHistoryImage())
-            .renderingMode(.template)
-    }
-    
-    private func createHistoryImage() -> UIImage {
-        let size = CGSize(width: 24, height: 24)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            let ctx = context.cgContext
-            let color = UIColor.black
-            
-            ctx.setStrokeColor(color.cgColor)
-            ctx.setLineWidth(2)
-            
-            // Circle
-            ctx.strokeEllipse(in: CGRect(x: 4, y: 4, width: 16, height: 16))
-            
-            // Clock hands
-            ctx.move(to: CGPoint(x: 12, y: 12))
-            ctx.addLine(to: CGPoint(x: 12, y: 8))
-            ctx.move(to: CGPoint(x: 12, y: 12))
-            ctx.addLine(to: CGPoint(x: 16, y: 12))
-            ctx.strokePath()
-        }
-    }
-}
-
-struct TabIconBook: View {
-    var body: some View {
-        Image(uiImage: createBookImage())
-            .renderingMode(.template)
-    }
-    
-    private func createBookImage() -> UIImage {
-        let size = CGSize(width: 24, height: 24)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            let ctx = context.cgContext
-            let color = UIColor.black
-            
-            ctx.setFillColor(color.cgColor)
-            ctx.fill(CGRect(x: 4, y: 3, width: 16, height: 18))
-            
-            ctx.setFillColor(UIColor.white.cgColor)
-            ctx.fill(CGRect(x: 6, y: 5, width: 12, height: 14))
-            
-            // Lines
-            ctx.setStrokeColor(color.withAlphaComponent(0.3).cgColor)
-            ctx.setLineWidth(1)
-            for i in 0..<4 {
-                let y = CGFloat(8 + i * 3)
-                ctx.move(to: CGPoint(x: 8, y: y))
-                ctx.addLine(to: CGPoint(x: 16, y: y))
-            }
-            ctx.strokePath()
-        }
-    }
-}
-
-// MARK: - Inline Icons for Buttons and UI
-struct FishIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
+struct IcoHole: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.bark
     var body: some View {
         ZStack {
-            // Body
+            // ice slab
+            RoundedRectangle(cornerRadius: 3)
+                .fill(AppTheme.Palette.wheat)
+                .frame(width: sz * 0.9, height: sz * 0.45)
+            // dark hole
             Ellipse()
-                .fill(color)
-                .frame(width: size * 0.6, height: size * 0.35)
-            
-            // Tail
-            Triangle()
-                .fill(color)
-                .frame(width: size * 0.2, height: size * 0.3)
+                .fill(tint)
+                .frame(width: sz * 0.45, height: sz * 0.3)
+            Ellipse()
+                .fill(AppTheme.Palette.darkWood)
+                .frame(width: sz * 0.3, height: sz * 0.16)
+        }
+        .frame(width: sz, height: sz)
+    }
+}
+
+struct IcoClock: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.warmOrange
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(tint, lineWidth: sz * 0.09)
+                .frame(width: sz * 0.72, height: sz * 0.72)
+            // minute
+            Capsule()
+                .fill(tint)
+                .frame(width: sz * 0.06, height: sz * 0.28)
+                .offset(y: -sz * 0.1)
+            // hour
+            Capsule()
+                .fill(tint)
+                .frame(width: sz * 0.06, height: sz * 0.2)
                 .rotationEffect(.degrees(90))
-                .offset(x: -size * 0.35)
-            
-            // Eye
+                .offset(x: sz * 0.06)
             Circle()
-                .fill(Color.white)
-                .frame(width: size * 0.1, height: size * 0.1)
-                .offset(x: size * 0.15, y: -size * 0.02)
+                .fill(tint)
+                .frame(width: sz * 0.09, height: sz * 0.09)
         }
-        .frame(width: size, height: size)
+        .frame(width: sz, height: sz)
     }
 }
 
-struct Triangle: Shape {
+struct IcoStar: View {
+    var sz: CGFloat = 26
+    var filled: Bool = true
+    var tint: Color = AppTheme.Palette.warmOrange
+    var body: some View {
+        StarPath()
+            .fill(filled ? tint : tint.opacity(0.2))
+            .frame(width: sz, height: sz)
+    }
+}
+
+struct StarPath: Shape {
     func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.closeSubpath()
-        return path
-    }
-}
-
-struct BaitIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.secondary
-    
-    var body: some View {
-        ZStack {
-            // Worm body using curved shape
-            WormShape()
-                .stroke(color, lineWidth: size * 0.12)
-                .frame(width: size * 0.7, height: size * 0.6)
-            
-            // Head
-            Circle()
-                .fill(color)
-                .frame(width: size * 0.15, height: size * 0.15)
-                .offset(x: size * 0.25, y: -size * 0.2)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct WormShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.midX, y: rect.midY),
-            control: CGPoint(x: rect.minX + rect.width * 0.2, y: rect.midY)
-        )
-        path.addQuadCurve(
-            to: CGPoint(x: rect.maxX, y: rect.minY),
-            control: CGPoint(x: rect.midX + rect.width * 0.3, y: rect.midY + rect.height * 0.2)
-        )
-        return path
-    }
-}
-
-struct HoleIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.success
-    
-    var body: some View {
-        ZStack {
-            // Ice surface
-            RoundedRectangle(cornerRadius: 2)
-                .fill(AppTheme.Colors.surface)
-                .frame(width: size * 0.85, height: size * 0.5)
-            
-            // Hole
-            Ellipse()
-                .fill(color)
-                .frame(width: size * 0.5, height: size * 0.35)
-            
-            // Water inside
-            Ellipse()
-                .fill(AppTheme.Colors.primary.opacity(0.6))
-                .frame(width: size * 0.35, height: size * 0.18)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct ClockIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.accent
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(color, lineWidth: size * 0.08)
-                .frame(width: size * 0.75, height: size * 0.75)
-            
-            // Hour hand
-            RoundedRectangle(cornerRadius: 1)
-                .fill(color)
-                .frame(width: size * 0.08, height: size * 0.22)
-                .offset(y: -size * 0.08)
-            
-            // Minute hand
-            RoundedRectangle(cornerRadius: 1)
-                .fill(color)
-                .frame(width: size * 0.06, height: size * 0.18)
-                .rotationEffect(.degrees(90))
-                .offset(x: size * 0.06)
-            
-            // Center
-            Circle()
-                .fill(color)
-                .frame(width: size * 0.1, height: size * 0.1)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct CalculatorIconView: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: size * 0.08)
-                .fill(color)
-                .frame(width: size * 0.7, height: size * 0.85)
-            
-            // Screen
-            RoundedRectangle(cornerRadius: 2)
-                .fill(AppTheme.Colors.surface)
-                .frame(width: size * 0.5, height: size * 0.2)
-                .offset(y: -size * 0.22)
-            
-            // Buttons grid
-            VStack(spacing: size * 0.06) {
-                ForEach(0..<2, id: \.self) { _ in
-                    HStack(spacing: size * 0.08) {
-                        ForEach(0..<3, id: \.self) { _ in
-                            Circle()
-                                .fill(AppTheme.Colors.surface)
-                                .frame(width: size * 0.1, height: size * 0.1)
-                        }
-                    }
-                }
-            }
-            .offset(y: size * 0.12)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct PlusIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 2)
-                .fill(color)
-                .frame(width: size * 0.6, height: size * 0.15)
-            
-            RoundedRectangle(cornerRadius: 2)
-                .fill(color)
-                .frame(width: size * 0.15, height: size * 0.6)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct CheckmarkIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.success
-    
-    var body: some View {
-        Path { path in
-            path.move(to: CGPoint(x: size * 0.2, y: size * 0.5))
-            path.addLine(to: CGPoint(x: size * 0.4, y: size * 0.7))
-            path.addLine(to: CGPoint(x: size * 0.8, y: size * 0.3))
-        }
-        .stroke(color, style: StrokeStyle(lineWidth: size * 0.1, lineCap: .round, lineJoin: .round))
-        .frame(width: size, height: size)
-    }
-}
-
-struct TrashIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.secondary
-    
-    var body: some View {
-        ZStack {
-            // Lid
-            RoundedRectangle(cornerRadius: 1)
-                .fill(color)
-                .frame(width: size * 0.65, height: size * 0.08)
-                .offset(y: -size * 0.3)
-            
-            // Handle
-            RoundedRectangle(cornerRadius: 2)
-                .stroke(color, lineWidth: size * 0.08)
-                .frame(width: size * 0.25, height: size * 0.1)
-                .offset(y: -size * 0.38)
-            
-            // Body
-            TrapezoidShape()
-                .fill(color)
-                .frame(width: size * 0.55, height: size * 0.5)
-                .offset(y: size * 0.08)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct TrapezoidShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX + rect.width * 0.1, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX - rect.width * 0.1, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX - rect.width * 0.2, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX + rect.width * 0.2, y: rect.maxY))
-        path.closeSubpath()
-        return path
-    }
-}
-
-struct ArrowRightIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.textSecondary
-    
-    var body: some View {
-        Path { path in
-            path.move(to: CGPoint(x: size * 0.35, y: size * 0.25))
-            path.addLine(to: CGPoint(x: size * 0.65, y: size * 0.5))
-            path.addLine(to: CGPoint(x: size * 0.35, y: size * 0.75))
-        }
-        .stroke(color, style: StrokeStyle(lineWidth: size * 0.1, lineCap: .round, lineJoin: .round))
-        .frame(width: size, height: size)
-    }
-}
-
-struct SaveIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
-    var body: some View {
-        ZStack {
-            // Outer
-            RoundedRectangle(cornerRadius: size * 0.08)
-                .fill(color)
-                .frame(width: size * 0.7, height: size * 0.7)
-            
-            // Top notch
-            Rectangle()
-                .fill(AppTheme.Colors.surface)
-                .frame(width: size * 0.3, height: size * 0.2)
-                .offset(y: -size * 0.22)
-            
-            // Paper
-            Rectangle()
-                .fill(AppTheme.Colors.surface)
-                .frame(width: size * 0.4, height: size * 0.22)
-                .offset(y: size * 0.12)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct ProfileIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
-    var body: some View {
-        ZStack {
-            // Folder
-            FolderShape()
-                .fill(color)
-                .frame(width: size * 0.85, height: size * 0.65)
-            
-            // Star
-            StarShape()
-                .fill(AppTheme.Colors.accent)
-                .frame(width: size * 0.3, height: size * 0.3)
-                .offset(y: size * 0.05)
-        }
-        .frame(width: size, height: size)
-    }
-}
-
-struct FolderShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.minY + rect.height * 0.2))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + rect.height * 0.2))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY + rect.height * 0.2))
-        path.addLine(to: CGPoint(x: rect.midX - rect.width * 0.1, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        path.closeSubpath()
-        return path
-    }
-}
-
-struct StarShape: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let center = CGPoint(x: rect.midX, y: rect.midY)
-        let outerRadius = min(rect.width, rect.height) / 2
-        let innerRadius = outerRadius * 0.4
-        
+        let cx = rect.midX; let cy = rect.midY
+        let or2 = min(rect.width, rect.height) / 2
+        let ir = or2 * 0.38
+        var p = Path()
         for i in 0..<10 {
-            let angle = Double(i) * .pi / 5 - .pi / 2
-            let radius = i % 2 == 0 ? outerRadius : innerRadius
-            let point = CGPoint(
-                x: center.x + CGFloat(cos(angle)) * radius,
-                y: center.y + CGFloat(sin(angle)) * radius
-            )
-            if i == 0 {
-                path.move(to: point)
-            } else {
-                path.addLine(to: point)
-            }
+            let a = Double(i) * .pi / 5 - .pi / 2
+            let r = i % 2 == 0 ? or2 : ir
+            let pt = CGPoint(x: cx + CGFloat(cos(a)) * r, y: cy + CGFloat(sin(a)) * r)
+            if i == 0 { p.move(to: pt) } else { p.addLine(to: pt) }
         }
-        path.closeSubpath()
-        return path
+        p.closeSubpath()
+        return p
     }
 }
 
-struct HistoryIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
+struct IcoPlus: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.cream
     var body: some View {
         ZStack {
-            Circle()
-                .stroke(color, lineWidth: size * 0.08)
-                .frame(width: size * 0.7, height: size * 0.7)
-            
-            // Hands
-            Path { path in
-                let center = CGPoint(x: size / 2, y: size / 2)
-                path.move(to: center)
-                path.addLine(to: CGPoint(x: size / 2, y: size * 0.3))
-                path.move(to: center)
-                path.addLine(to: CGPoint(x: size * 0.65, y: size / 2))
-            }
-            .stroke(color, lineWidth: size * 0.06)
-            
-            // Arrow at top
-            Path { path in
-                path.move(to: CGPoint(x: size * 0.35, y: size * 0.12))
-                path.addLine(to: CGPoint(x: size * 0.5, y: size * 0.05))
-                path.addLine(to: CGPoint(x: size * 0.65, y: size * 0.12))
-            }
-            .stroke(color, style: StrokeStyle(lineWidth: size * 0.08, lineCap: .round, lineJoin: .round))
+            Capsule().fill(tint).frame(width: sz * 0.55, height: sz * 0.15)
+            Capsule().fill(tint).frame(width: sz * 0.15, height: sz * 0.55)
         }
-        .frame(width: size, height: size)
+        .frame(width: sz, height: sz)
     }
 }
 
-struct BookIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
+struct IcoTrash: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.dustyRed
+    var body: some View {
+        Canvas { ctx, size in
+            let w = size.width; let h = size.height
+            // lid
+            var lid = Path()
+            lid.addRoundedRect(in: CGRect(x: w * 0.2, y: h * 0.1, width: w * 0.6, height: h * 0.1), cornerSize: CGSize(width: 2, height: 2))
+            ctx.fill(lid, with: .color(tint))
+            // handle
+            var handle = Path()
+            handle.addRoundedRect(in: CGRect(x: w * 0.37, y: h * 0.02, width: w * 0.26, height: h * 0.12), cornerSize: CGSize(width: 3, height: 3))
+            ctx.stroke(handle, with: .color(tint), lineWidth: sz * 0.06)
+            // body
+            var b = Path()
+            b.move(to: CGPoint(x: w * 0.25, y: h * 0.24))
+            b.addLine(to: CGPoint(x: w * 0.3, y: h * 0.9))
+            b.addLine(to: CGPoint(x: w * 0.7, y: h * 0.9))
+            b.addLine(to: CGPoint(x: w * 0.75, y: h * 0.24))
+            b.closeSubpath()
+            ctx.fill(b, with: .color(tint))
+        }
+        .frame(width: sz, height: sz)
+    }
+}
+
+struct IcoChevronDown: View {
+    var sz: CGFloat = 20
+    var tint: Color = AppTheme.Palette.bark
+    var body: some View {
+        Path { p in
+            p.move(to: CGPoint(x: sz * 0.2, y: sz * 0.3))
+            p.addLine(to: CGPoint(x: sz * 0.5, y: sz * 0.7))
+            p.addLine(to: CGPoint(x: sz * 0.8, y: sz * 0.3))
+        }
+        .stroke(tint, style: StrokeStyle(lineWidth: sz * 0.1, lineCap: .round, lineJoin: .round))
+        .frame(width: sz, height: sz)
+    }
+}
+
+struct IcoSnowflake: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.bark
+    var body: some View {
+        Canvas { ctx, size in
+            let cx = size.width / 2; let cy = size.height / 2
+            let armLen = min(size.width, size.height) * 0.38
+            for i in 0..<6 {
+                let angle = Double(i) * .pi / 3
+                var arm = Path()
+                arm.move(to: CGPoint(x: cx, y: cy))
+                arm.addLine(to: CGPoint(x: cx + CGFloat(cos(angle)) * armLen,
+                                        y: cy + CGFloat(sin(angle)) * armLen))
+                ctx.stroke(arm, with: .color(tint), lineWidth: sz * 0.06)
+            }
+        }
+        .frame(width: sz, height: sz)
+    }
+}
+
+struct IcoBook: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.bark
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: size * 0.08)
-                .fill(color)
-                .frame(width: size * 0.7, height: size * 0.8)
-            
-            RoundedRectangle(cornerRadius: size * 0.04)
-                .fill(Color.white)
-                .frame(width: size * 0.5, height: size * 0.6)
-            
-            // Lines
-            VStack(spacing: size * 0.08) {
+            RoundedRectangle(cornerRadius: sz * 0.1)
+                .fill(tint)
+                .frame(width: sz * 0.65, height: sz * 0.78)
+            RoundedRectangle(cornerRadius: sz * 0.06)
+                .fill(AppTheme.Palette.cream)
+                .frame(width: sz * 0.48, height: sz * 0.58)
+            VStack(spacing: sz * 0.07) {
                 ForEach(0..<3, id: \.self) { _ in
-                    RoundedRectangle(cornerRadius: 1)
-                        .fill(color.opacity(0.3))
-                        .frame(width: size * 0.35, height: size * 0.04)
+                    Capsule()
+                        .fill(tint.opacity(0.3))
+                        .frame(width: sz * 0.32, height: sz * 0.04)
                 }
             }
         }
-        .frame(width: size, height: size)
+        .frame(width: sz, height: sz)
     }
 }
 
-// Keep these for compatibility but they won't be used in tabs
-struct CalculatorIcon: View {
-    var size: CGFloat = 24
-    var color: Color = AppTheme.Colors.primary
-    
+struct IcoCalendar: View {
+    var sz: CGFloat = 26
+    var tint: Color = AppTheme.Palette.forestGreen
     var body: some View {
-        CalculatorIconView(size: size, color: color)
+        ZStack {
+            RoundedRectangle(cornerRadius: sz * 0.1)
+                .fill(tint)
+                .frame(width: sz * 0.72, height: sz * 0.72)
+                .offset(y: sz * 0.06)
+            RoundedRectangle(cornerRadius: sz * 0.06)
+                .fill(AppTheme.Palette.cream)
+                .frame(width: sz * 0.58, height: sz * 0.44)
+                .offset(y: sz * 0.14)
+            // top rings
+            HStack(spacing: sz * 0.22) {
+                Capsule().fill(tint).frame(width: sz * 0.08, height: sz * 0.18)
+                Capsule().fill(tint).frame(width: sz * 0.08, height: sz * 0.18)
+            }
+            .offset(y: -sz * 0.18)
+        }
+        .frame(width: sz, height: sz)
     }
 }

@@ -1,47 +1,69 @@
 import Foundation
 
-struct BaitProfile: Codable, Identifiable {
+// A journal entry — a fishing trip log where user records bait usage and rates it
+struct JournalEntry: Codable, Identifiable {
     let id: UUID
-    var name: String
-    var fishType: FishType
-    var baitType: BaitType
-    var defaultHours: Int
-    var defaultHoles: Int
-    var createdAt: Date
-    var updatedAt: Date
-    
+    var species: FishSpecies
+    var material: BaitMaterial
+    var durationHours: Int
+    var holeCount: Int
+    var baitUsedGrams: Double       // actual amount used
+    var effectiveness: Effectiveness
+    var weatherTag: WeatherTag
+    var memo: String
+    var starRating: Int             // 1-5 subjective
+    let loggedAt: Date
+    var editedAt: Date
+
     init(
         id: UUID = UUID(),
-        name: String,
-        fishType: FishType,
-        baitType: BaitType,
-        defaultHours: Int = 4,
-        defaultHoles: Int = 3,
-        createdAt: Date = Date(),
-        updatedAt: Date = Date()
+        species: FishSpecies = .perch,
+        material: BaitMaterial = .bloodworm,
+        durationHours: Int = 4,
+        holeCount: Int = 3,
+        baitUsedGrams: Double = 0,
+        effectiveness: Effectiveness = .okay,
+        weatherTag: WeatherTag = .overcast,
+        memo: String = "",
+        starRating: Int = 3,
+        loggedAt: Date = Date(),
+        editedAt: Date = Date()
     ) {
         self.id = id
-        self.name = name
-        self.fishType = fishType
-        self.baitType = baitType
-        self.defaultHours = defaultHours
-        self.defaultHoles = defaultHoles
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
+        self.species = species
+        self.material = material
+        self.durationHours = durationHours
+        self.holeCount = holeCount
+        self.baitUsedGrams = baitUsedGrams
+        self.effectiveness = effectiveness
+        self.weatherTag = weatherTag
+        self.memo = memo
+        self.starRating = min(5, max(1, starRating))
+        self.loggedAt = loggedAt
+        self.editedAt = editedAt
     }
-    
-    mutating func update(
-        name: String? = nil,
-        fishType: FishType? = nil,
-        baitType: BaitType? = nil,
-        defaultHours: Int? = nil,
-        defaultHoles: Int? = nil
-    ) {
-        if let name = name { self.name = name }
-        if let fishType = fishType { self.fishType = fishType }
-        if let baitType = baitType { self.baitType = baitType }
-        if let defaultHours = defaultHours { self.defaultHours = defaultHours }
-        if let defaultHoles = defaultHoles { self.defaultHoles = defaultHoles }
-        self.updatedAt = Date()
+
+    var formattedDate: String {
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        f.timeStyle = .short
+        return f.string(from: loggedAt)
     }
+}
+
+enum Effectiveness: String, Codable, CaseIterable, Identifiable {
+    case poor = "Poor"
+    case okay = "Okay"
+    case good = "Good"
+    case great = "Great"
+    var id: String { rawValue }
+}
+
+enum WeatherTag: String, Codable, CaseIterable, Identifiable {
+    case sunny = "Sunny"
+    case overcast = "Overcast"
+    case snowy = "Snowy"
+    case windy = "Windy"
+    case foggy = "Foggy"
+    var id: String { rawValue }
 }

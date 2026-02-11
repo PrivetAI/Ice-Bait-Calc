@@ -1,145 +1,102 @@
 import SwiftUI
 
-struct HistoryView: View {
-    @StateObject private var profileManager = ProfileManager.shared
-    @State private var selectedEntry: HistoryEntry?
-    
+// Seasonal calendar section — collapsible
+struct SeasonalCalendarView: View {
+    @Binding var expanded: Bool
+
     var body: some View {
-        NavigationView {
-            ZStack {
-                AppTheme.Colors.background
-                    .ignoresSafeArea()
-                
-                if profileManager.history.isEmpty {
-                    VStack(spacing: 16) {
-                        HistoryIcon(size: 64, color: AppTheme.Colors.textSecondary)
-                        
-                        Text("No History Yet")
-                            .font(.headline)
-                            .foregroundColor(AppTheme.Colors.textPrimary)
-                        
-                        Text("Your saved calculations will appear here")
-                            .font(.subheadline)
-                            .foregroundColor(AppTheme.Colors.textSecondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 32)
-                    }
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 12) {
-                            ForEach(profileManager.history) { entry in
-                                HistoryCard(entry: entry)
-                                    .onTapGesture {
-                                        selectedEntry = entry
-                                    }
-                            }
-                        }
-                        .padding(AppTheme.Dimensions.padding)
+        VStack(spacing: 0) {
+            Button(action: { withAnimation(.easeInOut(duration: 0.25)) { expanded.toggle() } }) {
+                HStack {
+                    IcoCalendar(sz: 22)
+                    Text("Seasonal Bait Calendar")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.charcoal)
+                    Spacer()
+                    IcoChevronDown(sz: 18, tint: AppTheme.Palette.bark)
+                        .rotationEffect(.degrees(expanded ? 0 : -90))
+                }
+                .padding(.vertical, AppTheme.Spacing.sm)
+            }
+            .buttonStyle(PlainButtonStyle())
+
+            if expanded {
+                VStack(spacing: 12) {
+                    ForEach(SeasonalTipStore.tips) { tip in
+                        SeasonalTipCard(tip: tip)
                     }
                 }
-            }
-            .navigationTitle("History")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    if !profileManager.history.isEmpty {
-                        Button("Clear") {
-                            profileManager.clearHistory()
-                        }
-                        .foregroundColor(AppTheme.Colors.secondary)
-                    }
-                }
-            }
-            .sheet(item: $selectedEntry) { entry in
-                HistoryDetailView(entry: entry)
+                .padding(.top, AppTheme.Spacing.sm)
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
-struct HistoryCard: View {
-    let entry: HistoryEntry
-    
+struct SeasonalTipCard: View {
+    let tip: SeasonalTip
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        WoodCard {
             HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(Int(entry.result.totalBait))g total")
-                        .font(.headline)
-                        .foregroundColor(AppTheme.Colors.primary)
-                    
-                    Text(entry.formattedDate)
-                        .font(.caption)
-                        .foregroundColor(AppTheme.Colors.textSecondary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(tip.season.rawValue)
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.cream)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Capsule().fill(seasonColor(tip.season)))
+                    Text(tip.headline)
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.charcoal)
                 }
-                
                 Spacer()
-                
-                if let feedback = entry.feedbackRating {
-                    FeedbackBadge(rating: feedback)
-                }
-                
-                ArrowRightIcon(size: 20, color: AppTheme.Colors.textSecondary)
+                Text(tip.monthRange)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundColor(AppTheme.Palette.bark.opacity(0.6))
             }
-            
-            HStack(spacing: 16) {
-                HStack(spacing: 4) {
-                    ClockIcon(size: 16, color: AppTheme.Colors.accent)
-                    Text("\(entry.result.hours)h")
-                        .font(.caption)
-                        .foregroundColor(AppTheme.Colors.textSecondary)
-                }
-                
-                HStack(spacing: 4) {
-                    HoleIcon(size: 16, color: AppTheme.Colors.success)
-                    Text("\(entry.result.holes) holes")
-                        .font(.caption)
-                        .foregroundColor(AppTheme.Colors.textSecondary)
-                }
-                
-                HStack(spacing: 4) {
-                    FishIcon(size: 16, color: AppTheme.Colors.primary)
-                    Text(entry.result.fishType.rawValue)
-                        .font(.caption)
-                        .foregroundColor(AppTheme.Colors.textSecondary)
-                }
-            }
-            
-            if !entry.notes.isEmpty {
-                Text(entry.notes)
-                    .font(.caption)
-                    .foregroundColor(AppTheme.Colors.textSecondary)
-                    .lineLimit(2)
-            }
-        }
-        .padding(AppTheme.Dimensions.padding)
-        .cardStyle()
-    }
-}
 
-struct FeedbackBadge: View {
-    let rating: FeedbackRating
-    
-    var color: Color {
-        switch rating {
-        case .tooMuch:
-            return AppTheme.Colors.warning
-        case .perfect:
-            return AppTheme.Colors.success
-        case .notEnough:
-            return AppTheme.Colors.secondary
+            Text(tip.body)
+                .font(.system(size: 14, design: .rounded))
+                .foregroundColor(AppTheme.Palette.charcoal.opacity(0.85))
+                .lineSpacing(3)
+
+            // Recommended materials
+            HStack(spacing: 6) {
+                Text("Bait:")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(AppTheme.Palette.bark.opacity(0.7))
+                ForEach(tip.recommendedMaterials) { mat in
+                    Text(mat.rawValue)
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.charcoal)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Capsule().fill(AppTheme.Palette.wheat))
+                }
+            }
+
+            HStack(spacing: 6) {
+                Text("Fish:")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundColor(AppTheme.Palette.bark.opacity(0.7))
+                ForEach(tip.topSpecies) { sp in
+                    Text(sp.rawValue)
+                        .font(.system(size: 11, weight: .medium, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.charcoal)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Capsule().fill(AppTheme.Palette.wheat))
+                }
+            }
         }
     }
-    
-    var body: some View {
-        Text(rating.rawValue)
-            .font(.caption)
-            .fontWeight(.medium)
-            .foregroundColor(color)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(color.opacity(0.15))
-            .cornerRadius(8)
+
+    private func seasonColor(_ s: IceSeason) -> Color {
+        switch s {
+        case .earlyIce: return AppTheme.Palette.forestGreen
+        case .midWinter: return AppTheme.Palette.bark
+        case .lateIce: return AppTheme.Palette.warmOrange
+        }
     }
 }

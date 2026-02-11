@@ -1,60 +1,49 @@
 import Foundation
 
-struct HistoryEntry: Codable, Identifiable {
-    let id: UUID
-    let result: CalculationResult
-    var notes: String
-    var feedbackRating: FeedbackRating?
-    let createdAt: Date
-    var updatedAt: Date
-    
-    init(
-        id: UUID = UUID(),
-        result: CalculationResult,
-        notes: String = "",
-        feedbackRating: FeedbackRating? = nil,
-        createdAt: Date = Date(),
-        updatedAt: Date = Date()
-    ) {
-        self.id = id
-        self.result = result
-        self.notes = notes
-        self.feedbackRating = feedbackRating
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
-    }
-    
-    mutating func addNote(_ note: String) {
-        self.notes = note
-        self.updatedAt = Date()
-    }
-    
-    mutating func setFeedback(_ rating: FeedbackRating) {
-        self.feedbackRating = rating
-        self.updatedAt = Date()
-    }
-    
-    var formattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: createdAt)
-    }
+// Seasonal bait tips — static data shown in the seasonal calendar section
+struct SeasonalTip: Identifiable {
+    let id = UUID()
+    let monthRange: String       // e.g. "Dec - Jan"
+    let season: IceSeason
+    let headline: String
+    let body: String
+    let recommendedMaterials: [BaitMaterial]
+    let topSpecies: [FishSpecies]
 }
 
-enum FeedbackRating: String, Codable, CaseIterable {
-    case tooMuch = "Too Much"
-    case perfect = "Perfect"
-    case notEnough = "Not Enough"
-    
-    var description: String {
-        switch self {
-        case .tooMuch:
-            return "Had leftover bait"
-        case .perfect:
-            return "Just right amount"
-        case .notEnough:
-            return "Ran out of bait"
-        }
-    }
+enum IceSeason: String, CaseIterable, Identifiable {
+    case earlyIce = "Early Ice"
+    case midWinter = "Mid-Winter"
+    case lateIce = "Late Ice"
+    var id: String { rawValue }
+}
+
+// Pre-built tips
+struct SeasonalTipStore {
+    static let tips: [SeasonalTip] = [
+        SeasonalTip(
+            monthRange: "Nov - Dec",
+            season: .earlyIce,
+            headline: "First Ice Frenzy",
+            body: "Fish are still active and aggressive. Use generous portions of bloodworm near drop-offs. Perch and roach feed heavily before deep winter sets in. Shorter sessions of 2-3 hours can be very productive.",
+            recommendedMaterials: [.bloodworm, .mixedLive],
+            topSpecies: [.perch, .roach, .ide]
+        ),
+        SeasonalTip(
+            monthRange: "Jan - Feb",
+            season: .midWinter,
+            headline: "Deep Freeze Patience",
+            body: "Metabolism slows. Use smaller bait portions and extend pauses between feeds. Maggot becomes more effective as bloodworm supply dwindles. Target deeper holes where fish congregate.",
+            recommendedMaterials: [.maggot, .bloodworm],
+            topSpecies: [.bream, .whitefish, .burbot]
+        ),
+        SeasonalTip(
+            monthRange: "Mar - Apr",
+            season: .lateIce,
+            headline: "Spring Thaw Surge",
+            body: "Oxygen levels rise under thinning ice. Fish become active again. Bread dough and mixed blends shine now. Feed more aggressively and try shallow areas near inflows.",
+            recommendedMaterials: [.breadDough, .mixedLive, .maggot],
+            topSpecies: [.crucian, .tench, .rudd]
+        ),
+    ]
 }

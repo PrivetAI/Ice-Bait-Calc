@@ -1,82 +1,52 @@
 import SwiftUI
 
-struct PrimaryButton: View {
-    let title: String
-    var iconView: AnyView? = nil
+// Rustic-styled action button — pill shape with engraved look
+struct RusticButton: View {
+    let label: String
     let action: () -> Void
-    var isFullWidth: Bool = true
-    var style: ButtonStyleType = .primary
-    
-    enum ButtonStyleType {
-        case primary
-        case secondary
-        case accent
-        
-        var backgroundColor: Color {
+    var wide: Bool = true
+    var tone: Tone = .primary
+
+    enum Tone {
+        case primary, secondary, danger
+        var bg: Color {
             switch self {
-            case .primary:
-                return AppTheme.Colors.primary
-            case .secondary:
-                return AppTheme.Colors.surface
-            case .accent:
-                return AppTheme.Colors.secondary
+            case .primary: return AppTheme.Palette.bark
+            case .secondary: return AppTheme.Palette.forestGreen
+            case .danger: return AppTheme.Palette.dustyRed
             }
         }
-        
-        var foregroundColor: Color {
-            switch self {
-            case .primary, .accent:
-                return .white
-            case .secondary:
-                return AppTheme.Colors.primary
-            }
-        }
+        var fg: Color { AppTheme.Palette.cream }
     }
-    
+
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
-                if let iconView = iconView {
-                    iconView
-                }
-                Text(title)
-                    .font(.headline)
-                    .fontWeight(.semibold)
-            }
-            .foregroundColor(style.foregroundColor)
-            .frame(maxWidth: isFullWidth ? .infinity : nil)
-            .frame(height: AppTheme.Dimensions.buttonHeight)
-            .padding(.horizontal, isFullWidth ? 0 : 24)
-            .background(
-                RoundedRectangle(cornerRadius: AppTheme.Dimensions.cornerRadius)
-                    .fill(style.backgroundColor)
-                    .shadow(
-                        color: style.backgroundColor.opacity(0.4),
-                        radius: AppTheme.Shadows.buttonShadowRadius,
-                        x: 0,
-                        y: 4
-                    )
-            )
+            Text(label)
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundColor(tone.fg)
+                .frame(maxWidth: wide ? .infinity : nil)
+                .frame(height: 50)
+                .padding(.horizontal, wide ? 0 : 28)
+                .background(
+                    RoundedRectangle(cornerRadius: AppTheme.Radius.button)
+                        .fill(tone.bg)
+                        .shadow(color: AppTheme.Palette.shadow.opacity(0.35), radius: 4, x: 0, y: 3)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: AppTheme.Radius.button)
+                        .stroke(tone.bg.opacity(0.6), lineWidth: 1)
+                        .padding(1)
+                )
         }
-        .buttonStyle(ScaleButtonStyle())
+        .buttonStyle(DepressStyle())
     }
 }
 
-// Convenience initializer without icon
-extension PrimaryButton {
-    init(title: String, action: @escaping () -> Void, isFullWidth: Bool = true, style: ButtonStyleType = .primary) {
-        self.title = title
-        self.iconView = nil
-        self.action = action
-        self.isFullWidth = isFullWidth
-        self.style = style
-    }
-}
-
-struct ScaleButtonStyle: SwiftUI.ButtonStyle {
+// Press-down style instead of scale
+struct DepressStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.96 : 1)
-            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+            .offset(y: configuration.isPressed ? 2 : 0)
+            .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
     }
 }

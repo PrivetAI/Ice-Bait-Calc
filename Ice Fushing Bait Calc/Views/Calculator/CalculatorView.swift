@@ -1,188 +1,108 @@
 import SwiftUI
 
-struct CalculatorView: View {
-    @StateObject private var profileManager = ProfileManager.shared
-    @State private var hours: Double = 4
-    @State private var holes: Double = 3
-    @State private var selectedFish: FishType = .perch
-    @State private var selectedBait: BaitType = .bloodworm
-    @State private var showResult = false
-    @State private var calculationResult: CalculationResult?
-    @State private var showProfilePicker = false
-    
+// Journal section — collapsible list of fishing trip entries
+struct JournalSectionView: View {
+    @ObservedObject var state: AppState
+    @Binding var expanded: Bool
+    @State private var showComposer = false
+    @State private var selectedEntry: JournalEntry?
+
     var body: some View {
-        NavigationView {
-            ZStack {
-                AppTheme.Colors.background
-                    .ignoresSafeArea()
-                
-                ScrollView {
-                    VStack(spacing: 16) {
-                        // Load from profile button
-                        if !profileManager.profiles.isEmpty {
-                            Button(action: { showProfilePicker = true }) {
-                                HStack {
-                                    ProfileIcon(size: 20, color: AppTheme.Colors.primary)
-                                    Text("Load from Profile")
-                                        .font(.subheadline)
-                                        .fontWeight(.medium)
-                                    Spacer()
-                                    ArrowRightIcon(size: 16, color: AppTheme.Colors.textSecondary)
-                                }
-                                .padding()
-                                .background(AppTheme.Colors.cardBackground)
-                                .cornerRadius(AppTheme.Dimensions.cornerRadius)
-                            }
-                            .buttonStyle(ScaleButtonStyle())
-                        }
-                        
-                        // Hours slider
-                        CustomSlider(
-                            title: "Fishing Duration",
-                            value: $hours,
-                            range: 1...12,
-                            step: 1,
-                            icon: AnyView(ClockIcon(size: 24, color: AppTheme.Colors.accent)),
-                            unit: "hours"
-                        )
-                        
-                        // Holes slider
-                        CustomSlider(
-                            title: "Number of Holes",
-                            value: $holes,
-                            range: 1...10,
-                            step: 1,
-                            icon: AnyView(HoleIcon(size: 24, color: AppTheme.Colors.success)),
-                            unit: "holes"
-                        )
-                        
-                        // Fish type picker
-                        SelectionPicker(
-                            title: "Target Fish",
-                            icon: AnyView(FishIcon(size: 24, color: AppTheme.Colors.primary)),
-                            options: FishType.allCases,
-                            selection: $selectedFish
-                        )
-                        
-                        // Bait type picker
-                        SelectionPicker(
-                            title: "Bait Type",
-                            icon: AnyView(BaitIcon(size: 24, color: AppTheme.Colors.secondary)),
-                            options: BaitType.allCases,
-                            selection: $selectedBait
-                        )
-                        
-                        // Calculate button
-                        PrimaryButton(
-                            title: "Calculate",
-                            action: calculateBait
-                        )
-                        .padding(.top, 8)
-                    }
-                    .padding(AppTheme.Dimensions.padding)
+        VStack(spacing: 0) {
+            // Section header
+            Button(action: { withAnimation(.easeInOut(duration: 0.25)) { expanded.toggle() } }) {
+                HStack {
+                    IcoBook(sz: 22, tint: AppTheme.Palette.bark)
+                    Text("Bait Journal")
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.charcoal)
+                    Spacer()
+                    Text("\(state.journal.count)")
+                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.cream)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(Capsule().fill(AppTheme.Palette.bark))
+                    IcoChevronDown(sz: 18, tint: AppTheme.Palette.bark)
+                        .rotationEffect(.degrees(expanded ? 0 : -90))
                 }
-                
-                // Navigation to result
-                NavigationLink(
-                    destination: ResultView(result: calculationResult),
-                    isActive: $showResult
-                ) {
-                    EmptyView()
-                }
+                .padding(.vertical, AppTheme.Spacing.sm)
             }
-            .navigationTitle("Ice Fushing Bait Calc")
-            .navigationBarTitleDisplayMode(.large)
-            .sheet(isPresented: $showProfilePicker) {
-                ProfilePickerSheet(
-                    profiles: profileManager.profiles,
-                    onSelect: { profile in
-                        loadProfile(profile)
-                        showProfilePicker = false
+            .buttonStyle(PlainButtonStyle())
+
+            if expanded {
+                VStack(spacing: 10) {
+                    RusticButton(label: "Log New Trip", action: { showComposer = true }, tone: .secondary)
+
+                    if state.journal.isEmpty {
+                        Text("No entries yet. Tap above to log your first ice fishing trip.")
+                            .font(.system(size: 14, design: .rounded))
+                            .foregroundColor(AppTheme.Palette.bark.opacity(0.7))
+                            .multilineTextAlignment(.center)
+                            .padding(.vertical, AppTheme.Spacing.lg)
+                    } else {
+                        ForEach(state.journal) { entry in
+                            JournalRow(entry: entry)
+                                .onTapGesture { selectedEntry = entry }
+                        }
                     }
-                )
+                }
+                .padding(.top, AppTheme.Spacing.sm)
+                .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-    }
-    
-    private func calculateBait() {
-        let result = CalculationService.shared.calculate(
-            fishType: selectedFish,
-            baitType: selectedBait,
-            hours: Int(hours),
-            holes: Int(holes)
-        )
-        calculationResult = result
-        showResult = true
-    }
-    
-    private func loadProfile(_ profile: BaitProfile) {
-        hours = Double(profile.defaultHours)
-        holes = Double(profile.defaultHoles)
-        selectedFish = profile.fishType
-        selectedBait = profile.baitType
+        .sheet(isPresented: $showComposer) {
+            EntryComposerView(state: state, existing: nil)
+        }
+        .sheet(item: $selectedEntry) { entry in
+            EntryDetailSheet(state: state, entry: entry)
+        }
     }
 }
 
-// MARK: - Profile Picker Sheet
-struct ProfilePickerSheet: View {
-    let profiles: [BaitProfile]
-    let onSelect: (BaitProfile) -> Void
-    @Environment(\.presentationMode) var presentationMode
-    
+// Single journal row
+struct JournalRow: View {
+    let entry: JournalEntry
+
     var body: some View {
-        NavigationView {
-            ZStack {
-                AppTheme.Colors.background
-                    .ignoresSafeArea()
-                
-                ScrollView {
-                    VStack(spacing: 12) {
-                        Text("Select a profile to load its settings into the calculator")
-                            .font(.subheadline)
-                            .foregroundColor(AppTheme.Colors.textSecondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom, 8)
-                        
-                        ForEach(profiles) { profile in
-                            Button(action: { onSelect(profile) }) {
-                                HStack {
-                                    VStack(alignment: .leading, spacing: 4) {
-                                        Text(profile.name)
-                                            .font(.headline)
-                                            .foregroundColor(AppTheme.Colors.textPrimary)
-                                        
-                                        Text("\(profile.fishType.rawValue) • \(profile.baitType.rawValue)")
-                                            .font(.caption)
-                                            .foregroundColor(AppTheme.Colors.textSecondary)
-                                        
-                                        Text("\(profile.defaultHours)h • \(profile.defaultHoles) holes")
-                                            .font(.caption)
-                                            .foregroundColor(AppTheme.Colors.textSecondary)
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    ArrowRightIcon(size: 20, color: AppTheme.Colors.primary)
-                                }
-                                .padding()
-                                .cardStyle()
-                            }
-                            .buttonStyle(ScaleButtonStyle())
-                        }
-                    }
-                    .padding(AppTheme.Dimensions.padding)
+        WoodCard {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("\(entry.species.rawValue) / \(entry.material.rawValue)")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.charcoal)
+                    Text(entry.formattedDate)
+                        .font(.system(size: 12, design: .rounded))
+                        .foregroundColor(AppTheme.Palette.bark.opacity(0.6))
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 4) {
+                    StarDisplayView(rating: entry.starRating, sz: 14)
+                    Text(entry.effectiveness.rawValue)
+                        .font(.system(size: 11, weight: .semibold, design: .rounded))
+                        .foregroundColor(effectivenessColor(entry.effectiveness))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule().fill(effectivenessColor(entry.effectiveness).opacity(0.15))
+                        )
                 }
             }
-            .navigationTitle("Load Profile")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
+            if !entry.memo.isEmpty {
+                Text(entry.memo)
+                    .font(.system(size: 13, design: .rounded))
+                    .foregroundColor(AppTheme.Palette.charcoal.opacity(0.7))
+                    .lineLimit(2)
             }
+        }
+    }
+
+    private func effectivenessColor(_ e: Effectiveness) -> Color {
+        switch e {
+        case .poor: return AppTheme.Palette.dustyRed
+        case .okay: return AppTheme.Palette.warmOrange
+        case .good: return AppTheme.Palette.forestGreen
+        case .great: return AppTheme.Palette.forestGreen
         }
     }
 }

@@ -1,69 +1,66 @@
 import SwiftUI
 
-struct CustomSlider: View {
-    let title: String
+// Rustic range control — thick track with wood-tone fill
+struct RangeControl: View {
+    let heading: String
     @Binding var value: Double
-    let range: ClosedRange<Double>
+    let bounds: ClosedRange<Double>
     let step: Double
     let icon: AnyView
-    let unit: String
-    
+    let suffix: String
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        WoodCard {
             HStack {
                 icon
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(AppTheme.Colors.textPrimary)
+                Text(heading)
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                    .foregroundColor(AppTheme.Palette.charcoal)
                 Spacer()
-                Text("\(Int(value)) \(unit)")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(AppTheme.Colors.primary)
+                Text("\(Int(value)) \(suffix)")
+                    .font(.system(size: 22, weight: .heavy, design: .rounded))
+                    .foregroundColor(AppTheme.Palette.bark)
             }
-            
-            GeometryReader { geometry in
+
+            GeometryReader { geo in
+                let pct = CGFloat((value - bounds.lowerBound) / (bounds.upperBound - bounds.lowerBound))
                 ZStack(alignment: .leading) {
-                    // Track background
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(AppTheme.Colors.surface)
-                        .frame(height: 8)
-                    
-                    // Filled track
-                    RoundedRectangle(cornerRadius: 8)
+                    // track bg
+                    Capsule()
+                        .fill(AppTheme.Palette.wheat)
+                        .frame(height: 10)
+                    // filled portion
+                    Capsule()
                         .fill(
                             LinearGradient(
-                                colors: [AppTheme.Colors.primary, AppTheme.Colors.success],
+                                colors: [AppTheme.Palette.warmOrange, AppTheme.Palette.bark],
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
                         )
-                        .frame(width: max(0, CGFloat((value - range.lowerBound) / (range.upperBound - range.lowerBound)) * geometry.size.width), height: 8)
-                    
-                    // Thumb
+                        .frame(width: max(10, pct * geo.size.width), height: 10)
+                    // thumb
                     Circle()
-                        .fill(AppTheme.Colors.cardBackground)
-                        .frame(width: 28, height: 28)
-                        .shadow(color: AppTheme.Colors.primary.opacity(0.3), radius: 4, x: 0, y: 2)
+                        .fill(AppTheme.Palette.cream)
+                        .frame(width: 30, height: 30)
+                        .shadow(color: AppTheme.Palette.shadow.opacity(0.3), radius: 3, x: 0, y: 2)
                         .overlay(
                             Circle()
-                                .fill(AppTheme.Colors.primary)
+                                .fill(AppTheme.Palette.bark)
                                 .frame(width: 12, height: 12)
                         )
-                        .offset(x: max(0, CGFloat((value - range.lowerBound) / (range.upperBound - range.lowerBound)) * (geometry.size.width - 28)))
+                        .offset(x: max(0, pct * (geo.size.width - 30)))
                         .gesture(
                             DragGesture(minimumDistance: 0)
-                                .onChanged { gesture in
-                                    let newValue = range.lowerBound + (range.upperBound - range.lowerBound) * Double(gesture.location.x / geometry.size.width)
-                                    let steppedValue = round(newValue / step) * step
-                                    value = min(max(steppedValue, range.lowerBound), range.upperBound)
+                                .onChanged { g in
+                                    let raw = bounds.lowerBound + (bounds.upperBound - bounds.lowerBound) * Double(g.location.x / geo.size.width)
+                                    let stepped = (raw / step).rounded() * step
+                                    value = min(max(stepped, bounds.lowerBound), bounds.upperBound)
                                 }
                         )
                 }
             }
-            .frame(height: 28)
+            .frame(height: 30)
         }
-        .padding(AppTheme.Dimensions.padding)
-        .cardStyle()
     }
 }
